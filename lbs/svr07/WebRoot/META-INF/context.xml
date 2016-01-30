@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context reloadable="true" crossContext="true">
+    <Resource name="jdbc/mysqlds" 
+        auth="Container" 
+        type="javax.sql.DataSource" 
+        username="motordb" 
+        password="monday@409" 
+        maxIdle="5" 
+        maxWait="20000" 
+        maxActive="28"
+        driverClassName="com.mysql.jdbc.Driver"
+        url="jdbc:mysql://113.107.219.97:3306/rxdb"
+        logAbandoned="true" />
+</Context>

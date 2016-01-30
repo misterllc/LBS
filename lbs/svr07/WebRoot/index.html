@@ -1,0 +1,261 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<meta HTTP-EQUIV="pragma" CONTENT="no-cache">
+  <meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+  <meta HTTP-EQUIV="expires" CONTENT="0">   
+<title>map</title>
+<style type="text/css">
+#header{ width: 100%;} 
+#bodycenter{ width:100%;height:800px;} 
+ #dv1 { float: left; margin-left:0;width: 16%; height:100%;background-color:#BABABA;align:center;} 
+ #dev11 {float: left; margin-left:0;width: 100%;height:330px;} 
+ #dev12 {float: left; margin-left:0;width: 100%;height:470px;} 
+ #dv2 { float: left;margin-left: auto; width: 84%; height:800px;} 
+#footer {width: 100%;} 
+</style>
+</head>
+<script language='javaScript'> 
+var is_login=false;
+function M(id){
+    return document.getElementById(id);
+}
+function a(card_id,s_no,imei)
+{
+	is_login=true;
+	M("cid").value =card_id;
+	M("cid2").value =card_id;
+	M("cid3").value =card_id;
+	M("cid4").value =card_id;
+    M("imeiNo").innerHTML=imei;
+    M("menu_schedule").submit();
+}
+function b()
+{
+	is_login=false;	 
+    M("menu_user").submit();	
+	M("div11b").style.display="none";
+	M("div12").style.display="none";
+	M("div11a").style.display="block";
+    M("menu_china").submit();			
+}
+
+function lastPos()
+{
+  if (!is_login) {   
+           alert("还未登录系统！");      
+           return;  
+          } 
+          initDate();
+	M('logTime').style.display='block';
+	// M("menu_his").submit();
+}
+
+ function menu_go() {   
+       if (!is_login) {   
+           alert("还未登录系统！");      
+           return;  
+          } 
+          M("menu_schedule").submit();   
+     
+    }   
+
+ function menu_cmd() {   
+       if (!is_login) {   
+           alert("还未登录系统！");      
+           return;  
+          }  
+          M("menu_cmd").submit();   
+    
+    }   
+
+function menu_term() {   
+       if (!is_login) {   
+           alert("还未登录系统！");      
+           return;  
+          } 
+   
+           M("menu_set").submit();   
+   
+    } 
+    
+function f_getpara(rpts,nm){
+	var l=nm.length+1;
+	var nm2=nm + "=";
+	var i=rpts.indexOf(nm2);
+	var j;
+	var rslt=null;
+	if (i>=0) {
+		i=i +l;
+		j=rpts.indexOf('&',i);
+		if (j<0) j=rpts.length;
+		rslt=rpts.substring(i,j);
+	}else {rslt=" ";}
+	return rslt.toLowerCase();	
+}
+    
+  function f_showStatus(rpts){
+    var alrm1=f_getpara(rpts,"ALRM1");
+    var alrm2=f_getpara(rpts,"ALRM2");
+    var sta=f_getpara(rpts,"STA");
+    var rt="";
+    
+    if (alrm1.indexOf("vib")>=0) {rt=rt +"异常震动  ";}
+    if (alrm1.indexOf("out")>=0) {rt=rt +"异常移动  ";}
+    if (rt.length>2) {rt=rt +"<br/>";}
+    if (alrm2.indexOf("low")>=0) {rt=rt +"电量偏低  ";}
+    if (alrm2.indexOf("out")>=0) {rt=rt +"异常断电  ";}
+    M("statusAlrm").innerHTML=rt;
+    rt="";
+    if (sta.indexOf("run")>=0) {rt=rt +"在行进  ";}
+    if (sta.indexOf("park")>=0) {rt=rt +"停车中  ";}
+    if (sta.indexOf("prot")>=0) {rt=rt +"防护已开  ";}
+    M("statusMotor").innerHTML=rt;
+    M("statusAcct").innerHTML=f_getpara(rpts,"ACCT");
+	M("statusTime").innerHTML=f_getpara(rpts,"TIME");
+	M("statusMile").innerHTML=f_getpara(rpts,"MILE");
+	M("statusBat").innerHTML=f_getpara(rpts,"BAT");
+
+  	M("div11b").style.display="block";
+  	M("div12").style.display="block";
+  	M("div11a").style.display="none";
+  	return 2;
+  }
+  
+</script>
+<body ><div style="width:100%; margin:0 auto;font-size:18px;" >
+<div id="header">
+    <iframe name="frm_top" align=top src="./topic.html"   frameborder=0 scrolling=no width=100% height=20> </iframe>
+</div>
+<div id="bodycenter">
+<div id="dv1"  >
+	<div id="div11">
+		<div id="div11a" style="display:block;float:left;">
+		<iframe name="frm_left"  align=middle src="./user.html" width=100%  height=300px frameborder=0 scrolling=no ></iframe> 
+		</div>
+		<div id="div11b" style="display:none;float:left;">
+		<span id="imeiNo"> </span><br/><br/>
+		 <table    border="0" align="center" title="" width=200px style="font-size:14px;">
+    	<tr><td>更新: </td><td id="statusTime" >.</td> </tr>
+    	<tr><td>电量：</td><td id="statusBat" ></td> </tr> 
+		<tr><td>里程：</td><td id="statusMile"></td> </tr> 
+		<tr><td>状态：</td><td id="statusMotor"></td> </tr>
+		<tr><td>余额：</td><td id="statusAcct"></td> </tr>
+		<tr><td>告警：</td><td id="statusAlrm" rowspan=2></td> </tr>
+		</table>
+		<br/>
+		<br/>
+		</div>
+	</div>
+
+	<div id="div12" style="display:none;float:left;">
+	<br><br><br>
+	<table width=100%;>	
+	<tr><td>
+		<center> <a href="javascript:menu_go();">实时追踪</a></center>
+		<br/><br/>
+		<center> <a href="javascript:lastPos();">历史轨迹</a></center>
+		<br/><br/>
+		<center><a href="javascript:menu_cmd();">终端指令 </a></center>
+		<br/><br/>
+		<center><a href="javascript:menu_term();">终端设置 </a></center>
+		<br/><br/>
+		<center><a href="javascript:b();">退出登录 </a></center>
+		
+	</td></tr>
+	<tr><td><br/></td></tr>
+	<tr><td><br/></td></tr>
+	<tr><td><br/></td></tr>
+	<tr><td><br/></td></tr>
+	</table>
+	</div>
+</div>	
+
+<div id="dv2" >
+    <iframe name="frm_main" id="frm_main" align=middle src="china.html" width=100% height=100% frameborder=0 scrolling=no ></iframe> 
+</div>
+</div>
+<div id="footer">
+    <iframe name="frm_bottom" align=bottom src="./bottom.html" frameborder=0 scrolling=no width=100% height=28></iframe> 
+</div>
+<div style="display: none">
+		<form name="menu_schedule" id="menu_schedule" action="history_map.jsp" method="post" target="frm_main">		
+			<input type="hidden"  name="action"  value="0" readonly>
+			<input type="hidden"  name="regDate" value="2016-01-22" readonly>
+			<input type="hidden"  name="cid" id="cid"  readonly>
+			<input type="hidden"  name="sno" id="sno"	value="0" readonly>
+			<input type="submit" name="Submit" value="确定" align="top" >				
+		</form>
+		<form name="menu_schedule" id="menu_set" action="motor_web_set.jsp" method="post" target="frm_main">		
+			<input type="hidden"  name="action"   value="r" readonly>
+			<input type="hidden"  name="cid" id="cid2"  readonly>
+			<input type="submit" name="Submit" value="确定" align="top" >				
+		</form>
+		<form name="menu_schedule" id="menu_cmd" action="motor_webCMD.jsp" method="post" target="frm_main">		
+			<input type="hidden"  name="cid" id="cid3"  readonly>
+			<input type="submit" name="Submit" value="确定" align="top" >				
+		</form>
+		<form name="menu_schedule" id="menu_user" action="user.html" method="post" target="frm_left">		
+			<input type="submit" name="Submit" value="确定" align="top" >				
+		</form>
+			<form name="menu_schedule" id="menu_china" action="china.html" method="post" target="frm_main">		
+			<input type="submit" name="Submit" value="确定" align="top" >				
+		</form>
+		<form name="menu_his" id="menu_his" action="history_map.jsp" method="post" target="frm_main">		
+			<input type="hidden"  name="cid" id="cid4" value="4" readonly>
+			<input type="hidden"  name="action"   value="1" readonly>
+			<input type="hidden"  name="regDate" id="regDate"	value="2016-01-22" readonly>
+			<input type="submit" name="Submit" value="确定" align="top" >				
+		</form>
+</div>
+</div>
+<div id="logTime" style="display:none;position:absolute;top:50%;left:50%;margin:-150px 0 0 -150px;width:236px;height:150px;z-index:0;border:solid 3px blue;background-color:white">
+<script type="text/javascript">
+var regdate;
+function initDate(){
+	var now = new Date();	
+	var rq1 ;
+	regdate=now.valueOf();
+	regdate=regdate -2*60*60*1000;
+	now=new Date(regdate);
+	rq1 =(now.getFullYear())+'-'+(now.getMonth() +1)+'-'+now.getDate();
+	document.getElementById("rq").innerHTML=rq1;
+	document.getElementById("sj").innerHTML=now.getHours()+':00';	
+}
+function changedate(dd){
+	var nw;
+	var rq1;
+	regdate=regdate +dd*60*60*1000;
+	nw=new Date(regdate);
+	rq1 =(nw.getFullYear())+'-'+(nw.getMonth() +1)+'-'+nw.getDate();
+	document.getElementById("rq").innerHTML=rq1;
+	document.getElementById("sj").innerHTML=nw.getHours()+':00';	
+}
+function timeok(){
+	var rq1;
+	var nw=new Date(regdate);
+	rq1 =(nw.getFullYear())+'-'+(nw.getMonth() +1)+'-'+nw.getDate() +' '+nw.getHours()+':00';
+	M("regDate").value=rq1;
+	M("menu_his").submit();
+	M("logTime").style.display="none";
+}
+
+</script>
+输入轨迹起始点：<br>
+<table style="width:100%" ><tr>
+<td><a href="javascript:changedate(-24);"><img src='images/22.gif'/></a></td>
+<td ><div style="border:solid 3px blue;height:30px;text-align:center;font-size:24px;width:140px;" id="rq">2016-01-22</div> </td>
+<td><a href="javascript:changedate(24);"><img src='images/22plus.gif'/></a></td>
+</tr>
+<tr></tr>
+<tr>
+<td><a href="javascript:changedate(-1);"><img src='images/22.gif'/></a></td>
+<td><div style="border:solid 3px blue;height:30px;text-align:center;font-size:24px;width:140px;" id="sj">08:00</div></td>
+<td><a href="javascript:changedate(1);"><img src='images/22plus.gif'/></a></td>
+</tr>
+</table>
+<br><div style="width:100%;text-align:center;"><button onclick="javascript:timeok()">确定</button></div> 
+</div>
+</body>
+</html>

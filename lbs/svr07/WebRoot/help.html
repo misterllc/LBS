@@ -1,0 +1,85 @@
+<html>
+<style type="text/css">
+.aa
+{ background-color:#0000ff; color:#ff0000;filter: alpha(opacity=50)}
+</style> 
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=GB2312">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=4.0, user-scalable=yes" />  
+<meta name="MobileOptimized" content="320"/> 
+<title>help</title>
+<script type="text/javascript">
+function f_center(gpsStr){
+alert('hello:'+gpsStr[1][0]);
+}
+</script>
+<style type="text/css">
+
+</style>
+</head>
+
+
+<body >
+
+<div style="width:320px; margin:0 auto;color:white;background:black;">
+<br/>
+<h4 style="text-align:center">手机短信操控说明</h4>
+&nbsp;&nbsp;&nbsp;&nbsp;远程操控只能在指定的手机上有效，每一种动作有四条指令，用户按照习惯自行选择。<br><br>
+一、远程断电：停,ting,stop,110<br>
+二、恢复通行: 走,zou,go,168<br>
+三、紧急查询：报,bao,up,114 <br>
+扫描设备IMEI码 <a href="javascript:initDate();"><img src="images/scan12.gif"/></a> <br/>
+扫描设备IMEI码<button type="button" id="scan_imei"><img src="images/scan12.gif"/></button>
+Date: <input type="date" name="user_date" />
+</div>
+<div id="logTime" style="display:block;position:absolute;top:50%;left:50%;margin:-150px 0 0 -150px;width:236px;height:150px;z-index:0;border:solid 3px blue;background-color:white">
+<script type="text/javascript">
+var regdate;
+function initDate(){
+	var now = new Date();	
+	var rq1 ;
+
+	regdate=now.valueOf();
+	regdate=regdate -2*60*60*1000;
+	now=new Date(regdate);
+	rq1 =(now.getFullYear())+'-'+(now.getMonth() +1)+'-'+now.getDate();
+	document.getElementById("rq").innerHTML=rq1;
+	document.getElementById("sj").innerHTML=now.getHours()+':00';
+	
+}
+function changedate(dd){
+	var nw;
+	var rq1;
+	regdate=regdate +dd*60*60*1000;
+	nw=new Date(regdate);
+	rq1 =(nw.getFullYear())+'-'+(nw.getMonth() +1)+'-'+nw.getDate();
+	document.getElementById("rq").innerHTML=rq1;
+	document.getElementById("sj").innerHTML=nw.getHours()+':00';
+	
+}
+function timeok(){
+	var rq1;
+	var nw=new Date(regdate);
+	rq1 =(nw.getFullYear())+'-'+(nw.getMonth() +1)+'-'+nw.getDate() +' '+nw.getHours()+':00';
+	alert(rq1);
+}
+
+</script>
+输入轨迹起始点：<br>
+<table style="width:100%" ><tr>
+<td><a href="javascript:changedate(-24);"><img src='images/22.gif'/></a></td>
+<td ><div style="border:solid 3px blue;height:30px;text-align:center;font-size:24px;width:140px;" id="rq">2016-01-22</div> </td>
+<td><a href="javascript:changedate(24);"><img src='images/22plus.gif'/></a></td>
+</tr>
+<tr></tr>
+<tr>
+<td><a href="javascript:changedate(-1);"><img src='images/22.gif'/></a></td>
+<td><div style="border:solid 3px blue;height:30px;text-align:center;font-size:24px;width:140px;" id="sj">08:00</div></td>
+<td><a href="javascript:changedate(1);"><img src='images/22plus.gif'/></a></td>
+</tr>
+</table>
+<br><div style="width:100%;text-align:center;"><button onclick="javascript:timeok()">确定</button></div> 
+</div>
+<input id="defaultSlider" type="range" min="0" max="500" />
+</body>
+</html>
