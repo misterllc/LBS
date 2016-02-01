@@ -1,4 +1,3 @@
-
 <%@ page language="java" import="java.util.*" import="rx.com.GsmLBS" pageEncoding="utf-8"%>
 <jsp:useBean id="mydata_2"  class="rx.com.MotorData" scope="application"/>
 
@@ -150,6 +149,8 @@ var converting=0;
 var maxCount=0;
 var lastNo=0;
 var period=33000;
+var realTime=1;
+var timeout="";
 
  var createMarker1 = function(posM,count,timeStamp) {
         var div = document.createElement('div');
@@ -216,16 +217,22 @@ var j=posXY.length;
 }
 function menu_go() { 	
 	initDate();
- 	M("logTime").style.display="block";              
+ 	M("logTime").style.display="block";  
+	realTime=999;           
     return 1; 
   }   
     
-function menu_latest() {	
+function menu_latest() {
+	if (realTime<10) {		
+	return;
+}
+	realTime=1;	
     M("action_h").value=0;
 	M("menu_his").submit();
 	clear_points();
 	maxCount=0;
 	period=33000;
+	
     return 1; 
  }   
 
@@ -362,9 +369,10 @@ if(status=='complete' && result.info=='ok'){
 		}
 			
    	 showMarkers();
-     if (maxCount<2){    	
+     if (maxCount<2 ||realTime<50){    	
    		 maxCount++;
-    	 setTimeout(refreshTimer,period);
+		realTime++;
+    	 timeout=setTimeout(refreshTimer,period);
     } 
  }
 
@@ -385,15 +393,19 @@ if(status=='complete' && result.info=='ok'){
  
  function refreshTimer(){
   	var cno3=parseInt(M("currentNo").value);
-  	if (lastNo>=cno3){
-  		period=33000;
-  	}
+  	var actionPage=null;
+	if ( realTime>50){ 	
+		actionPage="refresh3.jsp"; 	
+	} else{
+		actionPage="refresh2.jsp"; 
+	}
+  	
   	lastNo=cno3;
  	cno3++; 
 
  	 M("currentNo").value=cno3;  
       with (M("menu_schedule")) {            
-           action = "refresh3.jsp"; 
+           action = actionPage; 
            target="frm_bottom";  
            submit();   
         }   
@@ -442,7 +454,7 @@ if(status=='complete' && result.info=='ok'){
 			<input type="hidden"  name="openid" id="openid" value="<%=openId %>"  readonly>	
 			<input type="hidden"  name="cid" id="cid" value="<%=cid %>"  readonly>
 			<input type="hidden"  name="currentNo" id="currentNo"  value="<%=sno %>" readonly>
-			<input type="hidden"  name="action" id="actionCode"  value="-"  readonly>
+			<input type="hidden"  name="action" id="actionCode"  value="+"  readonly>
 			<input type="submit" name="Submit" value="submit" >	
 	</form>
 </div>
