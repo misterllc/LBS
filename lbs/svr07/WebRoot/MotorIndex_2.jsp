@@ -150,7 +150,7 @@ var maxCount=0;
 var lastNo=0;
 var period=33000;
 var realTime=1;
-var timeout="";
+var timeout;
 
  var createMarker1 = function(posM,count,timeStamp) {
         var div = document.createElement('div');
@@ -218,12 +218,14 @@ var j=posXY.length;
 function menu_go() { 	
 	initDate();
  	M("logTime").style.display="block";  
-	realTime=999;           
+	realTime=999;
+	if (timeout!="") {clearTimeout(timeout); }          
     return 1; 
   }   
     
 function menu_latest() {
-	if (realTime<10) {		
+	if (realTime<10) {	
+	alert("实时跟踪进行中.....");	
 	return;
 }
 	realTime=1;	
@@ -392,25 +394,25 @@ if(status=='complete' && result.info=='ok'){
  }
  
  function refreshTimer(){
-  	var cno3=parseInt(M("currentNo").value);
-  	var actionPage=null;
-	if ( realTime>50){ 	
-		actionPage="refresh3.jsp"; 	
-	} else{
-		actionPage="refresh2.jsp"; 
-	}
   	
-  	lastNo=cno3;
+	if ( realTime<50 ){ 	
+		 refreshLoc("refresh2.jsp"); 	
+	} else if (realTime>50 && maxCount<=2){
+		refreshLoc("refresh3.jsp"); 
+	}
+ 	 return 1;
+    }   
+ function refreshLoc(actionPage){
+ 	var cno3=parseInt(M("currentNo").value);	
  	cno3++; 
-
- 	 M("currentNo").value=cno3;  
+ 	M("currentNo").value=cno3;  
       with (M("menu_schedule")) {            
            action = actionPage; 
            target="frm_bottom";  
            submit();   
         }   
       return 1; 
-    }   
+ }
  
 </script>
   

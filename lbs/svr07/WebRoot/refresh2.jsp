@@ -5,14 +5,14 @@
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 String cid=request.getParameter("cid"); 
-String  action=request.getParameter("action");
+//String  action=request.getParameter("action");
 String currentNo=request.getParameter("currentNo");
 int cno=Integer.valueOf( currentNo);
-if (action.indexOf('-')==0){
-	cno=cno - 1;
-}else{
-	cno=0;
-}
+//if (action.indexOf('-')==0){
+//	cno=cno - 1;
+//}else{
+//	cno=0;
+//}
 String sql="select f_motor_web_loc2("+cid+","+cno+");";
 String rpts=mdata11.dsQuery(sql);  
 
