@@ -94,6 +94,7 @@ var converting=0;
 var maxCount=0;
 var lastNo=0;
 var period=<%=timerPeriod%>;
+var realTime=1;
 
  var createMarker1 = function(posM,count,timeStamp) {
         var div = document.createElement('div');
@@ -216,8 +217,9 @@ if(status=='complete' && result.info=='ok'){
  		} 
 		}	
     showMarkers();	 
-    if (maxCount<2){
+    if (maxCount<2||realTime<50){
    		 maxCount++;
+   		 realTime++;
     	 setTimeout(refreshTimer,period);
     }
  }
@@ -241,8 +243,8 @@ if(status=='complete' && result.info=='ok'){
  
   function refreshTimer(){
   	var cno3=parseInt(M("currentNo").value);
-  	if (lastNo>=cno3){
-  		period=33000;
+  	if (period<9000){
+  		realTime=999;
   	}
   	lastNo=cno3;
  	cno3++; 
